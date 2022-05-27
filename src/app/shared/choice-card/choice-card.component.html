@@ -1,11 +1,12 @@
 <mat-card class="example-card">
-    <div class="got-match" *ngIf="gotMatch">
-        <p>You got match!</p>
+    <div class="overlay" *ngIf="gotMatch || isEmpty">
+        <p *ngIf="gotMatch">You got match!</p>
+        <p *ngIf="isEmpty">There are no more items!</p>
     </div>
-    <mat-card-content>
+    <mat-card-content *ngIf="currentPerson">
         <img class="photo-preview" 
-             src="{{currentPerson.photo}}" 
-             alt="{{currentPerson.name}}">
+                src="{{currentPerson.photo}}" 
+                alt="{{currentPerson.name}}">
         <div class="person-description">
             <p>{{currentPerson.name}} {{currentPerson.lastName}}, {{currentPerson.age}}</p>
         </div>
@@ -13,9 +14,20 @@
     <mat-divider inset></mat-divider>
     <mat-card-footer>
         <mat-card-actions>
-            <button [disabled]="gotMatch" mat-raised-button color="primary" (click)="like()">Like</button>
-            <button *ngIf="!gotMatch" mat-raised-button color="primary" (click)="continue()">Dislike</button>
-            <button *ngIf="gotMatch" class="ok-btn" mat-raised-button color="primary" (click)="continue()">Okay</button>
+            <button [disabled]="gotMatch || isEmpty"
+                    mat-raised-button
+                    color="primary"
+                    (click)="like()">Like</button>
+            <button [disabled]="isEmpty"
+                    *ngIf="!gotMatch"
+                    mat-raised-button
+                    color="primary"
+                    (click)="dislike()">Dislike</button>
+            <button [disabled]="isEmpty"
+                    *ngIf="gotMatch"
+                    class="ok-btn"
+                    mat-raised-button color="primary"
+                    (click)="continue()">Okay</button>
         </mat-card-actions>
     </mat-card-footer>
 </mat-card>
