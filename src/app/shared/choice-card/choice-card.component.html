@@ -1,0 +1,21 @@
+<mat-card class="example-card">
+    <div class="got-match" *ngIf="gotMatch">
+        <p>You got match!</p>
+    </div>
+    <mat-card-content>
+        <img class="photo-preview" 
+             src="{{currentPerson.photo}}" 
+             alt="{{currentPerson.name}}">
+        <div class="person-description">
+            <p>{{currentPerson.name}} {{currentPerson.lastName}}, {{currentPerson.age}}</p>
+        </div>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <mat-card-footer>
+        <mat-card-actions>
+            <button [disabled]="gotMatch" mat-raised-button color="primary" (click)="like()">Like</button>
+            <button *ngIf="!gotMatch" mat-raised-button color="primary" (click)="continue()">Dislike</button>
+            <button *ngIf="gotMatch" class="ok-btn" mat-raised-button color="primary" (click)="continue()">Okay</button>
+        </mat-card-actions>
+    </mat-card-footer>
+</mat-card>
