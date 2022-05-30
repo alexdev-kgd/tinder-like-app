@@ -7,7 +7,7 @@ import { IPerson } from './interfaces/person.interface';
   styleUrls: ['./choice-card.component.sass']
 })
 export class ChoiceCardComponent implements OnInit {
-  @Input() people!: IPerson[];
+  @Input() people: IPerson[] = [];
 
   counter: number = 0;
 

@@ -1,10 +1,10 @@
 <mat-card class="example-card">
-    <div class="overlay" *ngIf="gotMatch || isEmpty">
+    <div class="overlay" *ngIf="gotMatch || isEmpty" data-testid="overlay">
         <p *ngIf="gotMatch">You got match!</p>
         <p *ngIf="isEmpty">There are no more items!</p>
     </div>
     <mat-card-content *ngIf="currentPerson">
-        <img class="photo-preview" 
+        <img class="photo-preview"
                 src="{{currentPerson.photo}}" 
                 alt="{{currentPerson.name}}">
         <div class="person-description">
@@ -17,16 +17,19 @@
             <button [disabled]="gotMatch || isEmpty"
                     mat-raised-button
                     color="primary"
+                    data-testid="like-btn"
                     (click)="like()">Like</button>
             <button [disabled]="isEmpty"
                     *ngIf="!gotMatch"
                     mat-raised-button
                     color="primary"
+                    data-testid="dislike-btn"
                     (click)="dislike()">Dislike</button>
             <button [disabled]="isEmpty"
                     *ngIf="gotMatch"
                     class="ok-btn"
                     mat-raised-button color="primary"
+                    data-testid="ok-btn"
                     (click)="continue()">Okay</button>
         </mat-card-actions>
     </mat-card-footer>
