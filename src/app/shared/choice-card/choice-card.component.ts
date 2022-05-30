@@ -33,20 +33,21 @@ export class ChoiceCardComponent implements OnInit {
   }
 
   dislike(): void {
+    this.remove();
+    this.checkForEmptiness();
+  }
+  
+  remove(): void {
     if (this.people.length === 1) this.isEmpty = true;
     if (this.people.length > 1) this.people.splice(this.counter, 1);
     if (!this.people[this.counter]) this.counter--;
-    this.currentPerson = this.people[this.counter]
-    this.checkForEmptiness();
+    this.currentPerson = this.people[this.counter];
   }
 
   continue(): void {
-    this.counter++;
-    
     if (this.gotMatch) this.gotMatch = false;
-    if (!this.people[this.counter]) this.counter = 0;
-
-    this.currentPerson = this.people[this.counter]
+    this.remove();
+    this.checkForEmptiness();
   }
 
 }

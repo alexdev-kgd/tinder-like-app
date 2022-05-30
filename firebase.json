@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/tinder-like-app",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

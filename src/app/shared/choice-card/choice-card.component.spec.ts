@@ -27,7 +27,6 @@ describe('ChoiceCardComponent', () => {
     fixture.detectChanges();
     component.people = [{
       "name": "test",
-      "lastName": "test",
       "age": 20,
       "photo": "assets/img/1.jpg",
     }]
@@ -58,35 +57,28 @@ describe('ChoiceCardComponent', () => {
     });
   });
 
-  describe('Dislike()', () => {
+  describe('Remove()', () => {
     it('should check if there is only one person in array', () => {
-      spyOn(component, 'dislike').and.callFake(() => {
-        if (component.people.length === 1) component.isEmpty = true;
-      })
+      component.remove();
 
       expect(component.people.length).toBe(1);
       expect(component.isEmpty).toBeTrue()
     });
 
-    it('should remove element from array if there are more than 2 persons', () => {
+    it('should remove element from array if there are more than 1 person', () => {
       component.people = [{
         "name": "test",
-        "lastName": "test",
         "age": 20,
         "photo": "assets/img/1.jpg",
       },{
         "name": "test2",
-        "lastName": "test2",
         "age": 22,
         "photo": "assets/img/2.jpg",
       }]
       component.counter = 0;
       const prevPeopleLength = component.people.length;
 
-      spyOn(component, 'dislike').and.callFake(() => {
-        if (component.people.length > 1) component.people.splice(component.counter, 1);
-      })
-      component.dislike();
+      component.remove();
 
       expect(prevPeopleLength).toBeGreaterThan(1);
       expect(prevPeopleLength).not.toBe(component.people.length);
@@ -95,81 +87,50 @@ describe('ChoiceCardComponent', () => {
     it('if there is no person with such index in array', () => {
       component.people = [{
         "name": "test",
-        "lastName": "test",
         "age": 20,
         "photo": "assets/img/1.jpg",
       },{
         "name": "test2",
-        "lastName": "test2",
         "age": 22,
         "photo": "assets/img/2.jpg",
       }];
-      const counter = component.counter = 2;
+      component.counter = 2;
 
-      spyOn(component, 'dislike').and.callFake(() => {
-        if (!component.people[component.counter]) component.counter--;
-      })
-      component.dislike();
+      component.remove();
 
       expect(component.counter).toBe(1);
       expect(!component.people[component.counter]).not.toBeTruthy();
-    });
-  });
-
-  describe('Continue()', () => {
-    it('should increment counter by 1', () => {
-      component.counter = 0;
-      component.people = [{
-        "name": "test",
-        "lastName": "test",
-        "age": 20,
-        "photo": "assets/img/1.jpg",
-      },{
-        "name": "test2",
-        "lastName": "test2",
-        "age": 22,
-        "photo": "assets/img/2.jpg",
-      }];
-
-      component.continue();
-
-      expect(component.counter).toBe(1);
-    });
-
-    it('should set gotMatch to false wherever its true', () => {
-      component.counter = 0
-      component.gotMatch = true;
-
-      component.continue();
-
-      expect(component.gotMatch).toBeFalse();
-    });
-
-    it('should counter to 0 if there is no person with such index', () => {
-      component.counter = 2
-
-      component.continue();
-
-      expect(component.counter).toBe(0);
     });
 
     it('should assign person to a currentPerson variable if there any', () => {
       component.people = [{
         "name": "test",
-        "lastName": "test",
         "age": 20,
         "photo": "assets/img/1.jpg",
       },{
         "name": "test2",
-        "lastName": "test2",
         "age": 22,
         "photo": "assets/img/2.jpg",
       }]
       component.counter = 0;
 
-      component.continue();
+      component.remove();
 
       expect(component.currentPerson).not.toBeUndefined();
+    });
+  });
+
+  describe('Continue()', () => {
+    it('should set gotMatch to false wherever its true', () => {
+      component.counter = 0
+      component.gotMatch = true;
+
+      spyOn(component, 'continue').and.callFake(() => {
+        if (component.gotMatch) component.gotMatch = false;
+      })
+      component.continue();
+
+      expect(component.gotMatch).toBeFalse();
     });
   });
 });
